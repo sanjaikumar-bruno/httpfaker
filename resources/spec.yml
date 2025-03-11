@@ -1,0 +1,82 @@
+openapi: '3.0.0'
+info:
+  title: 'HTTP Faker API'
+  version: '1.0.0'
+  description: 'A simple HTTP echo server API'
+tags:
+  - name: Echo
+    description: Endpoints that echo back request information
+paths:
+  /api/echo:
+    post:
+      summary: Echo back request details
+      description: Returns the complete request details including URL, method, headers, and body
+      tags:
+        - Echo
+      responses:
+        200:
+          description: Request details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    description: Complete request URL
+                  method:
+                    type: string
+                    description: HTTP method used
+                  headers:
+                    type: object
+                    description: Request headers
+                  body:
+                    type: string
+                    description: Raw request body
+  /api/echo/body:
+    post:
+      summary: Echo back request body
+      description: Returns the raw request body with the original content-type
+      tags:
+        - Echo
+      responses:
+        200:
+          description: Raw request body
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/echo/custom:
+    post:
+      summary: Echo back request with custom headers and content
+      description: Returns the raw request body with the original content-type
+      tags:
+        - Echo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                headers:
+                  type: object
+                  description: Custom headers to return
+                content:
+                  type: string
+                  description: Content to return as-is
+                contentBase64:
+                  type: string
+                  description: Base64 content to decode and return
+                contentJSON:
+                  type: object
+                  description: JSON content to stringify and return
+                type:
+                  type: string
+                  description: Content-Type header to set
+      responses:
+        200:
+          description: Custom response
+          content:
+            '*/*':
+              schema:
+                type: string 

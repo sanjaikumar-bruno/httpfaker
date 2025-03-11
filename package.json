@@ -1,17 +1,27 @@
 {
   "name": "httpfaker",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
   "main": "src/index.js",
+  "bin": {
+    "httpfaker": "./src/index.js"
+  },
   "scripts": {
-    "start": "node ."
+    "start": "node .",
+    "dev": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/usebruno/httpfaker.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Anoop M D",
+  "files": [
+    "src",
+    "package.json",
+    "readme.md",
+    "license.md"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/usebruno/httpfaker/issues"
@@ -21,6 +31,11 @@
     "body-parser": "^1.20.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "swagger-ui-express": "^5.0.0",
+    "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
   }
 }

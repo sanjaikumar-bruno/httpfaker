@@ -1,22 +1,33 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const swaggerUi = require('swagger-ui-express');
+const openApiSpecification = require('./openapi');
+
+const echo = require('./echo');
+const echoBody = require('./echo/body');
+const echoCustom = require('./echo/custom');
 
 const app = express();
 const PORT = 8080;
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+const saveRawBody = (req, res, buf) => {
+  req.rawBuffer = Buffer.from(buf);
+  req.rawBody = buf.toString();
+};
 
-app.post('/api/echo', (req, res) => {
-  res.json(req.body);
-});
+app.use(bodyParser.json({ verify: saveRawBody }));
+app.use(bodyParser.urlencoded({ extended: true, verify: saveRawBody }));
+app.use(bodyParser.text({ verify: saveRawBody }));
+app.use(express.raw({ type: '*/*', limit: '100mb', verify: saveRawBody }));
 
-// Simple GET endpoint for testing
-app.get('/', (req, res) => {
-  res.send('HTTP Faker is running');
-});
+// Serve OpenAPI documentation
+app.use('/', swaggerUi.serve, swaggerUi.setup(openApiSpecification));
 
+app.post('/api/echo', echo);
+app.post('/api/echo/body', echoBody);
+app.post('/api/echo/custom', echoCustom);
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`API documentation available at http://localhost:${PORT}/openapi`);
 });
