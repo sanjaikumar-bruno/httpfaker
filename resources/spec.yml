@@ -33,7 +33,7 @@ paths:
                   body:
                     type: string
                     description: Raw request body
-  /api/echo/body:
+  /api/echo/raw:
     post:
       summary: Echo back request body
       description: Returns the raw request body with the original content-type

@@ -1,4 +1,4 @@
-const echoBody = (req, res) => {
+const echoRaw = (req, res) => {
   if (req.headers['content-type']) {
     res.setHeader('Content-Type', req.headers['content-type']);
   }
@@ -6,4 +6,4 @@ const echoBody = (req, res) => {
   res.send(req.rawBody);
 };
 
-module.exports = echoBody;
+module.exports = echoRaw;

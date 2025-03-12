@@ -4,7 +4,7 @@ const swaggerUi = require('swagger-ui-express');
 const openApiSpecification = require('./openapi');
 
 const echo = require('./echo');
-const echoBody = require('./echo/body');
+const echoRaw = require('./echo/raw');
 const echoCustom = require('./echo/custom');
 
 const app = express();
@@ -24,10 +24,9 @@ app.use(express.raw({ type: '*/*', limit: '100mb', verify: saveRawBody }));
 app.use('/', swaggerUi.serve, swaggerUi.setup(openApiSpecification));
 
 app.post('/api/echo', echo);
-app.post('/api/echo/body', echoBody);
+app.post('/api/echo/raw', echoRaw);
 app.post('/api/echo/custom', echoCustom);
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
-  console.log(`API documentation available at http://localhost:${PORT}/openapi`);
 });
