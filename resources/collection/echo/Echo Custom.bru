@@ -1,0 +1,22 @@
+meta {
+  name: Echo Custom
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/echo/custom
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "headers": { "content-type": "text/html" },
+    "content": "<h1>hello httpfaker</h1>"
+  }
+}
+
+assert {
+  res.status: eq 200
+}

@@ -1,0 +1,25 @@
+meta {
+  name: Echo Raw
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/echo/raw
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "longint": 987213821838217367215372165123
+  }
+}
+
+assert {
+  res.status: eq 200
+}
+
+script:pre-request {
+  req.disableParsingResponseJson();
+}
