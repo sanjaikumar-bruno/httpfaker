@@ -26,7 +26,8 @@ app.post('/api/echo/custom', echoCustom);
 
 app.use('/api/auth/oauth2/client-credentials', oauth2ClientCredentials);
 
-app.get('/', swaggerUi.serve, swaggerUi.setup(openApiSpecification));
+app.use('/', swaggerUi.serve);
+app.get('/', swaggerUi.setup(openApiSpecification));
 
 // Start the server
 app.listen(PORT, () => {
