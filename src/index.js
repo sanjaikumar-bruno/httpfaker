@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const openApiSpecification = require('./openapi');
 const oauth2ClientCredentials = require('./auth/oauth2/client-credentials');
+const bearerAuth = require('./auth/bearer');
+
 const echo = require('./echo');
 const echoRaw = require('./echo/raw');
 const echoCustom = require('./echo/custom');
@@ -25,7 +27,7 @@ app.post('/api/echo/raw', echoRaw);
 app.post('/api/echo/custom', echoCustom);
 
 app.use('/api/auth/oauth2/client-credentials', oauth2ClientCredentials);
-
+app.use('/api/auth/bearer', bearerAuth);
 app.use('/', swaggerUi.serve);
 app.get('/', swaggerUi.setup(openApiSpecification));
 

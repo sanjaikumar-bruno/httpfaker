@@ -181,4 +181,94 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: Invalid Access Token 
+  /api/auth/bearer/login:
+    post:
+      summary: Bearer Authentication Login
+      description: Authenticate with username and password to receive a bearer token
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                  description: User's username
+                  example: admin
+                password:
+                  type: string
+                  description: User's password
+                  example: password
+      responses:
+        200:
+          description: Successful authentication
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: my_secret_token
+        401:
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+  /api/auth/bearer/resource:
+    get:
+      summary: Access Protected Resource
+      description: Access a protected resource using a bearer token
+      tags:
+        - Auth
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Resource access successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: bruno
+                  age:
+                    type: integer
+                    example: 5
+                  email:
+                    type: string
+                    example: support@usebruno.com
+                  likes:
+                    type: array
+                    items:
+                      type: string
+                    example: ['kibbles', 'naps', 'string cheese']
+        401:
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 

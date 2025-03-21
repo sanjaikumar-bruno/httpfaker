@@ -1,0 +1,15 @@
+meta {
+  name: Access Resource
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/auth/bearer/resource
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: my_secret_token
+}
