@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const openApiSpecification = require('./openapi');
-
+const oauth2ClientCredentials = require('./auth/oauth2/client-credentials');
 const echo = require('./echo');
 const echoRaw = require('./echo/raw');
 const echoCustom = require('./echo/custom');
@@ -23,6 +23,8 @@ app.use(express.raw({ type: '*/*', limit: '100mb', verify: saveRawBody }));
 app.post('/api/echo', echo);
 app.post('/api/echo/raw', echoRaw);
 app.post('/api/echo/custom', echoCustom);
+
+app.use('/api/auth/oauth2/client-credentials', oauth2ClientCredentials);
 
 app.get('/', swaggerUi.serve, swaggerUi.setup(openApiSpecification));
 
