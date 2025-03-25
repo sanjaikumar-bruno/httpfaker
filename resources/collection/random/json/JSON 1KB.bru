@@ -1,0 +1,19 @@
+meta {
+  name: JSON 1KB
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/random/json?size=1kb
+  body: none
+  auth: none
+}
+
+params:query {
+  size: 1kb
+}
+
+assert {
+  res.status: eq 200
+}

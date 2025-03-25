@@ -8,6 +8,8 @@ tags:
     description: Endpoints that echo back request information
   - name: Auth
     description: Authentication endpoints
+  - name: Random Data
+    description: Endpoints that generate random data
 paths:
   /api/echo:
     post:
@@ -265,6 +267,85 @@ paths:
                   message:
                     type: string
                     example: Unauthorized
+  /api/random/json:
+    get:
+      summary: Generate random user data
+      description: Generates random user data of specified size using Faker.js
+      tags:
+        - Random Data
+      parameters:
+        - in: query
+          name: size
+          schema:
+            type: string
+          required: false
+          description: Desired size of response (e.g. '1mb', '500kb'). Defaults to '1mb'
+          example: 1mb
+      responses:
+        200:
+          description: Random user data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: Unique identifier for the user
+                        firstName:
+                          type: string
+                          description: User's first name
+                        lastName:
+                          type: string
+                          description: User's last name
+                        email:
+                          type: string
+                          format: email
+                          description: User's email address
+                        avatar:
+                          type: string
+                          format: uri
+                          description: URL to user's avatar
+                        address:
+                          type: object
+                          properties:
+                            street:
+                              type: string
+                            city:
+                              type: string
+                            state:
+                              type: string
+                            country:
+                              type: string
+                            zipCode:
+                              type: string
+                        company:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            catchPhrase:
+                              type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+        400:
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                    example: Invalid size unit. Supported units are mb, kb
 
 components:
   securitySchemes:
